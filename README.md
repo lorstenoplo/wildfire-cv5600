@@ -2,11 +2,15 @@
 
 Wildfire ignition probability prediction for Northern California (2012–2023) using spatio-temporal weather, terrain, vegetation, and fire-weather index features.
 
-The pipeline has three stages:
+The pipeline has five stages:
 
 1. **Data collection & preprocessing** — download raw sources, transform into analysis-ready parquet files
-2. **Current-day prediction** — PatchTST + DLA model that estimates ignition probability for the current day
-3. **Future forecasting** — Monte Carlo simulation that propagates the current-day probability forward over a 7-day horizon
+2. **Build features** — imputation, window feature construction, and vegetation index processing (outputs feature CSVs/zarr)
+3. **Build labels** — match historical ignition patterns and construct binary label splits (outputs label CSVs)
+4. **Current-day prediction** — PatchTST + DLA model that estimates ignition probability for the current day
+5. **Future forecasting** — Monte Carlo simulation that propagates the current-day probability forward over a 7-day horizon
+
+> Stages 2 and 3 are optional if you use the pre-built dataset from Hugging Face.
 
 ---
 

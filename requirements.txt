@@ -1,0 +1,33 @@
+# Data collection & preprocessing
+numpy
+pandas
+xarray
+rasterio
+rioxarray
+pyarrow
+scipy
+scikit-learn
+pyproj
+zarr
+earthengine-api
+google-api-python-client
+google-auth
+huggingface_hub
+elevation
+aiohttp
+aiofiles
+tqdm
+psutil
+matplotlib
+
+# Models
+torch
+xgboost
+lightgbm
+catboost
+optuna
+shap
+
+# Notebooks & utils
+nbconvert
+pytest

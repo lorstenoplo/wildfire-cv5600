@@ -1,0 +1,8 @@
+.venv/
+catboost_info/
+__pycache__/
+data_raw/
+data_processed/
+cffdrs/tests/cffbps/data/
+cffdrs/tests/cffwis/data/
+notebooks/*.tif

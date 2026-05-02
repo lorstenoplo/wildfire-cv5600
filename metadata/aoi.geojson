@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Area of Interest"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-124.135, 36.993],
+            [-118.963, 36.993],
+            [-118.963, 42.01],
+            [-124.135, 42.01],
+            [-124.135, 36.993]
+          ]
+        ]
+      }
+    }
+  ]
+}

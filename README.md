@@ -27,29 +27,53 @@ Download them and place the files under `data_processed/`.
 
 ```
 wildfire_data/
-├── data_collection/        # Download & transform scripts
-│   ├── run_all.sh          # Entry point — runs all steps
-│   ├── config.py           # AOI, date range, paths
-│   ├── gee_auth.py         # One-time Google Earth Engine auth
-│   └── gdrive_download_and_merge.py
-├── build_features/         # Feature engineering notebooks
-├── current_day_predictions/ # Stage 2 — current-day model
+├── data_collection/            # Download & transform scripts
+│   ├── run_all.sh              # Entry point — runs all steps
+│   ├── config.py               # AOI, date range, paths
+│   ├── gee_auth.py             # One-time Google Earth Engine auth
+│   ├── gdrive_download_and_merge.py
+│   ├── download/               # Per-source download scripts (GridMET, SRTM, VIIRS, GFS, ignition)
+│   └── transform/              # Per-source transform scripts (t01–t08)
+├── build_features/             # Feature engineering notebooks (imputation, window features)
+├── build_labels/               # Label construction
+│   ├── build_label_splits_only.ipynb
+│   └── pattern_matches/        # Matched fire patterns & combined label CSV/JSON
+├── utils/                      # Shared utilities across the pipeline
+│   ├── cleaning_missing.py     # Missing value handling
+│   ├── feature_grids.py        # Spatial grid utilities
+│   ├── fire_patterns.py        # Fire pattern extraction
+│   ├── nofire_sampling.py      # Negative sample generation
+│   ├── nofire_splitter.py      # Train/val/test splitting for no-fire samples
+│   ├── pattern_splits.py       # Pattern-based data splitting
+│   ├── replenish_utils.py      # Sample replenishment helpers
+│   ├── window_feature_utils.py # Sliding window feature construction
+│   └── window_pipeline_io.py   # I/O for window feature pipeline
+├── current_day_predictions/    # Stage 2 — current-day model (run on Kaggle)
 │   ├── current-probability-pipeline-2.ipynb
-│   ├── model_patchtst_dla.py
+│   ├── model_patchtst_dla.py   # PatchTST + DLA architecture
 │   ├── trainer.py
 │   ├── configs.py
 │   ├── data_io.py
 │   ├── losses.py
 │   ├── metrics.py
 │   └── utils.py
-├── monte_carlo/            # Stage 3 — future forecasting
+├── monte_carlo/                # Stage 3 — future forecasting (run on Kaggle)
 │   ├── future-forecasting-monte-carlo.ipynb
 │   ├── functions.py
-│   └── main_kaggle.py
-├── cffdrs/                 # Fire-weather index library (third-party, see credits)
-├── metadata/               # Area of interest geometry
-├── research_paper/         # Reference papers
-└── notebooks/              # Exploratory notebooks
+│   ├── main_kaggle.py
+│   └── future_mc_forecast/     # MC forecast subpackage
+│       ├── forecast_runner.py  # Recursive forecast orchestration
+│       ├── monte_carlo_projector.py
+│       ├── mlp_model.py        # Future probability MLP
+│       ├── training_pipeline.py
+│       ├── training_data.py
+│       ├── feature_stats.py
+│       ├── io_utils.py
+│       └── config.py
+├── cffdrs/                     # Fire-weather index library (third-party, see credits)
+├── metadata/                   # Area of interest geometry
+├── research_paper/             # Reference papers
+└── notebooks/                  # Exploratory notebooks
 ```
 
 ---

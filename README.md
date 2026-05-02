@@ -5,18 +5,18 @@ Wildfire ignition probability prediction for Northern California (2012–2023) u
 The pipeline has five stages:
 
 1. **Data collection & preprocessing** — download raw sources, transform into analysis-ready parquet files
-2. **Build features** — imputation, window feature construction, and vegetation index processing (outputs feature CSVs/zarr)
+2. **Build features** — imputation, window feature construction, and vegetation index processing (outputs feature CSVs)
 3. **Build labels** — match historical ignition patterns and construct binary label splits (outputs label CSVs)
-4. **Current-day prediction** — PatchTST + DLA model that estimates ignition probability for the current day
-5. **Future forecasting** — Monte Carlo simulation that propagates the current-day probability forward over a 7-day horizon
+4. **Current-day prediction** — PatchTST + DLA model + Tree based models that estimates ignition probability for the current day
+5. **Future forecasting** — Monte Carlo simulation that propagates the current-day probability forward over a 7-day horizon ny MLP Classification at each sample.
 
-> Stages 2 and 3 are optional if you use the pre-built dataset from Hugging Face.
+> Use dataset from Hugging Face.
 
 ---
 
 ## Dataset
 
-The preprocessed datasets are publicly available on Hugging Face — **you do not need to run data collection** unless you want to regenerate from scratch.
+The preprocessed datasets are publicly available on Hugging Face.
 
 | Split | Link |
 |-------|------|
@@ -38,10 +38,10 @@ wildfire_data/
 │   ├── gdrive_download_and_merge.py
 │   ├── download/               # Per-source download scripts (GridMET, SRTM, VIIRS, GFS, ignition)
 │   └── transform/              # Per-source transform scripts (t01–t08)
-├── build_features/             # Feature engineering notebooks (imputation, window features)
+├── build_features/             # Feature engineering notebooks (imputation, window features, transformation to california geoid)
 ├── build_labels/               # Label construction
 │   ├── build_label_splits_only.ipynb
-│   └── pattern_matches/        # Matched fire patterns & combined label CSV/JSON
+│   └── pattern_matches/        # Matched fire patterns & combined label CSV
 ├── utils/                      # Shared utilities across the pipeline
 │   ├── cleaning_missing.py     # Missing value handling
 │   ├── feature_grids.py        # Spatial grid utilities
@@ -53,7 +53,7 @@ wildfire_data/
 │   ├── window_feature_utils.py # Sliding window feature construction
 │   └── window_pipeline_io.py   # I/O for window feature pipeline
 ├── current_day_predictions/    # Stage 2 — current-day model (run on Kaggle)
-│   ├── current-probability-pipeline-2.ipynb
+│   ├── current-probability-pipeline-2.ipynb # Transformer + Conv + Tree based models meta classifier
 │   ├── model_patchtst_dla.py   # PatchTST + DLA architecture
 │   ├── trainer.py
 │   ├── configs.py
@@ -62,7 +62,7 @@ wildfire_data/
 │   ├── metrics.py
 │   └── utils.py
 ├── monte_carlo/                # Stage 3 — future forecasting (run on Kaggle)
-│   ├── future-forecasting-monte-carlo.ipynb
+│   ├── future-forecasting-monte-carlo.ipynb  # Monte Carlo and MLP Classifier
 │   ├── functions.py
 │   ├── main_kaggle.py
 │   └── future_mc_forecast/     # MC forecast subpackage
@@ -140,13 +140,7 @@ Open and run:
 current_day_predictions/current-probability-pipeline-2.ipynb
 ```
 
-The model is a **PatchTST + DLA (Deep Layer Aggregation)** hybrid:
-
-- Tokenizes weather/FWI time-series into temporal patches per feature channel
-- Stacked transformer encoder with multi-level DLA aggregation
-- Auxiliary tabular shortcut branch + gated fusion head
-- Outputs per-pixel ignition probability for the current day
-
+The model is a **PatchTST + DLA (Deep Layer Aggregation) + Tree based models** hybrid
 Key config is in `current_day_predictions/configs.py` (`ModelConfig`, `TrainConfig`, `DataConfig`).
 
 ---

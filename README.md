@@ -16,9 +16,9 @@ The pipeline has five stages:
 
 Presentation Slides 
 
-[PPT](https://github.com/lorstenoplo/wildfire-cv5600/blob/master/WILDIFRE-CE23B035-CE23B048.pdf)
+[Presentation](https://github.com/lorstenoplo/wildfire-cv5600/blob/master/WILDIFRE-CE23B035-CE23B048.pdf)
 
----
+
 
 ## Dataset
 
@@ -30,6 +30,24 @@ The preprocessed datasets are publicly available on Hugging Face.
 | Labels (Y) | [NagrajMG/WildFire-Y](https://huggingface.co/datasets/NagrajMG/WildFire-Y) |
 
 Download them and place the files under `data_processed/`.
+
+---
+
+## Hyper-parameter Tuning
+
+[Notebook](https://github.com/lorstenoplo/wildfire-cv5600/blob/master/Hyperparameter-tuning.ipynb)
+
+## Pipeline 1 code - We model what we see
+
+[Notebook](https://github.com/lorstenoplo/wildfire-cv5600/blob/master/PipeLine1.ipynb)
+
+## Pipeline 2 code - We model what we want to see
+
+[Notebook](https://github.com/lorstenoplo/wildfire-cv5600/blob/master/current_day_predictions/current-probability-pipeline-2.ipynb)
+
+## Future Forecasting - Monte Carlo Path Simulations
+
+[Notebook](https://github.com/lorstenoplo/wildfire-cv5600/blob/master/monte_carlo/future-forecasting-monte-carlo.ipynb)
 
 ---
 

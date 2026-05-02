@@ -14,6 +14,12 @@ The pipeline has five stages:
 
 ---
 
+Presentation Slides 
+
+[PPT](https://github.com/lorstenoplo/wildfire-cv5600/blob/master/WILDIFRE-CE23B035-CE23B048.pdf)
+
+---
+
 ## Dataset
 
 The preprocessed datasets are publicly available on Hugging Face.
